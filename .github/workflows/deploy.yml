@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: [self-hosted, jenkinsVM]  # self-hosted 라벨과 jenkinsVM 이름을 사용
+    runs-on: self-hosted  # self-hosted 라벨과 jenkinsVM 이름을 사용
 
     env:
       ACR_NAME: ${{ secrets.ACR_NAME }}
