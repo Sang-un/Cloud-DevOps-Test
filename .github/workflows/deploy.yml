@@ -13,8 +13,8 @@ jobs:
       ACR_NAME: ${{ secrets.ACR_NAME }}
       IMAGE_NAME: flask-app
       IMAGE_TAG: ${{ github.sha }}  # 커밋 SHA를 이미지 태그로 사용
-      ARGO_SERVER: ${{ secrets.ARGOCD_SERVER}}
-      ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD}}
+      ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+      ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
 
     steps:
       # 1. 코드 체크아웃
