@@ -19,15 +19,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Azure 로그인
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      # # 2. Azure 로그인
+      # - name: Azure Login
+      #   uses: azure/login@v1
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # 3. Docker 이미지 빌드 및 ACR 푸시
       - name: Build and Push Docker Image to ACR
         run: |
+          echo "${{ secrets.AZURE_CREDENTIALS }}"
           az acr login --name $ACR_NAME
           docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG .
           docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG
