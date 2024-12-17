@@ -37,7 +37,6 @@ jobs:
       # 4. ArgoCD Sync
       - name: ArgoCD Deploy
         run: |
-          echo "hello world"
           argocd login $ARGOCD_SERVER --username admin --password $ARGOCD_PASSWORD --insecure
           argocd app set my-flask-app --parameter "image=$ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG"
           argocd app sync my-flask-app
