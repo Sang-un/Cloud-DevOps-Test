@@ -10,6 +10,6 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    run: pod
+    app: nginx
 status:
   loadBalancer: {}
