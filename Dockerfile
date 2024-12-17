@@ -1,15 +1,15 @@
-# Base image
-FROM python:3.9
+# 베이스 이미지 설정
+FROM python:3.9-slim
 
-# Set working directory
+# 작업 디렉터리 설정
 WORKDIR /app
 
-# Install dependencies
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+# 필요한 파일 복사
+COPY . /app
 
-# Copy application
-COPY . .
+# requirements.txt 파일 복사 및 패키지 설치
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Run Flask application
-CMD ["python", "app.py"]
+# Flask 애플리케이션 실행
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
