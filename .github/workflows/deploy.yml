@@ -34,7 +34,6 @@ jobs:
 
       # 4. ArgoCD Sync
       - name: ArgoCD Deploy
-        uses: actions/checkout@v3
         run: |
           echo "hello world"
           argocd login <ARGOCD_SERVER> --username admin --password <ARGOCD_PASSWORD> --insecure
