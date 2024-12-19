@@ -3,8 +3,6 @@ kind: RoleBinding
 metadata:
   name: hello-role-binding
   namespace: argocd
-  resourceVersion: "4950"
-  uid: b8ac2a55-95d3-474d-ba64-923eeb1882ac
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role

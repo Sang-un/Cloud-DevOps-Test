@@ -3,8 +3,6 @@ kind: Role
 metadata:
   name: hello-role
   namespace: argocd
-  resourceVersion: "4939"
-  uid: ca0c16f8-a4e9-4624-b510-5f097c2d142d
 rules:
 - apiGroups:
   - ""
