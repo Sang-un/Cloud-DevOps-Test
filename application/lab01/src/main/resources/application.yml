@@ -1,0 +1,32 @@
+spring:
+  profiles:
+    group:
+      "local": "local, common"
+      "dev": "dev, devdb"
+      "prod": "prod, common"
+    active: dev #활성 프로필 설정
+    service: Aservice
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "local"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "devdb"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "prod"
