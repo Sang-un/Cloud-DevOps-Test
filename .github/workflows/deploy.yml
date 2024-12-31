@@ -1,42 +1,42 @@
-name: CI/CD Pipeline - Build and Deploy to AKS
+# name: CI/CD Pipeline - Build and Deploy to AKS
 
-on:
-  push:
-    branches:
-      - main  # main 브랜치에 푸시될 때 실행
+# on:
+#   push:
+#     branches:
+#       - main  # main 브랜치에 푸시될 때 실행
 
-jobs:
-  build-and-deploy:
-    runs-on: self-hosted  # self-hosted 라벨과 jenkinsVM 이름을 사용
+# jobs:
+#   build-and-deploy:
+#     runs-on: self-hosted  # self-hosted 라벨과 jenkinsVM 이름을 사용
 
-    env:
-      ACR_NAME: ${{ secrets.ACR_NAME }}
-      IMAGE_NAME: flask-app
-      IMAGE_TAG: ${{ github.sha }}  # 커밋 SHA를 이미지 태그로 사용
-      ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
-      ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
+#     env:
+#       ACR_NAME: ${{ secrets.ACR_NAME }}
+#       IMAGE_NAME: flask-app
+#       IMAGE_TAG: ${{ github.sha }}  # 커밋 SHA를 이미지 태그로 사용
+#       ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+#       ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
 
-    steps:
-      # 1. 코드 체크아웃
-      - name: Checkout code
-        uses: actions/checkout@v3
+#     steps:
+#       # 1. 코드 체크아웃
+#       - name: Checkout code
+#         uses: actions/checkout@v3
 
-      # 2. Azure 로그인
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+#       # 2. Azure 로그인
+#       - name: Azure Login
+#         uses: azure/login@v1
+#         with:
+#           creds: '${{ secrets.AZURE_CREDENTIALS }}'
 
-      # 3. Docker 이미지 빌드 및 ACR 푸시
-      - name: Build and Push Docker Image to ACR
-        run: |
-          az acr login --name $ACR_NAME
-          docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG .
-          docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG
+#       # 3. Docker 이미지 빌드 및 ACR 푸시
+#       - name: Build and Push Docker Image to ACR
+#         run: |
+#           az acr login --name $ACR_NAME
+#           docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG .
+#           docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG
 
-      # 4. ArgoCD Sync
-      - name: ArgoCD Deploy
-        run: |
-          argocd login $ARGOCD_SERVER --username admin --password $ARGOCD_PASSWORD --insecure
-          argocd app set my-flask-app --parameter "image=$ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG"
-          argocd app sync my-flask-app
+#       # 4. ArgoCD Sync
+#       - name: ArgoCD Deploy
+#         run: |
+#           argocd login $ARGOCD_SERVER --username admin --password $ARGOCD_PASSWORD --insecure
+#           argocd app set my-flask-app --parameter "image=$ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG"
+#           argocd app sync my-flask-app
